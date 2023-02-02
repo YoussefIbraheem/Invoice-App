@@ -22,11 +22,24 @@ Invoices
         <h3 class="card-title  m-3">
           Invoices List
         </h3>
-        <form action="{{ url('/invoice_form') }}" method="GET">
-        <button class="btn my-3 btn-sm btn-outline-primary">
-          Add Invoice
-        </button>
-        </form>
+        <div class="d-flex justify-content-between">
+          <form class="" action="{{ url('/invoice_form') }}" method="GET">
+          <button class="btn my-3 btn-sm btn-outline-primary">
+            Add Invoice
+          </button>
+          </form>
+          <div class="btn-group">
+            <button type="button" class="btn my-3 btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              Payment Status
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{ url("/invoice_show/All") }}">All</a></li>
+              <li><a class="dropdown-item" href="{{ url("/invoice_show/Paid") }}">Paid</a></li>
+              <li><a class="dropdown-item" href="{{ url("/invoice_show/Partially Paid	") }}">Partially Paid	</a></li>
+              <li><a class="dropdown-item" href="{{ url("/invoice_show/Unpaid") }}">Unpaid</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div class="card-body">
         <div class="col-md-12">
@@ -37,6 +50,7 @@ Invoices
                     <th scope="col">Invoice Number</th>
                     <th scope="col">Invoice Date</th>
                     <th scope="col">Allocation Date</th>
+                    <th scope="col">Payment Date</th>
                     <th scope="col">Product</th>
                     <th scope="col">Department</th>
                     <th scope="col">Discount</th>
@@ -45,6 +59,7 @@ Invoices
                     <th scope="col">Total</th>
                     <th scope="col">Status</th>
                     <th scope="col">Notes</th>
+                    <th scope="col">Options</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -54,18 +69,57 @@ Invoices
                     <td>{{ $invoice->invoice_number }}</td>
                     <td>{{ $invoice->invoice_Date }}</td>
                     <td>{{ $invoice->Due_date }}</td>
+                    <td>{{ $invoice->Payment_Date }}</td>
                     <td>{{ $invoice->product }}</td>
-                    <td>{{ $invoice->sections->section_name }}</td>
+                    <td><a href="{{ url("invoice_details/$invoice->id") }}">{{ $invoice->sections->section_name }}</a></td>
                     <td>{{ $invoice->Discount }}</td>
                     <td>{{ $invoice->Rate_VAT }}</td>
                     <td>{{ $invoice->Value_VAT }}</td>
                     <td>{{ $invoice->Total }}</td>
                     <td>{{ $invoice->Status }}</td>
                     <td>@if(!empty($invoice->note))<textarea  disabled style="resize:none ;overflow:scroll; background-color:#faf9f6" name="" id="" cols="15" rows="3">{{ $invoice->note }}</textarea>@endif</td>
+                    <td>
+                      <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Options
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="{{ url("/invoice_update_form/$invoice->id") }}">Update</a></li>
+                          <li><a class="dropdown-item" href="{{ url("/invoice_print/$invoice->id") }}">Print</a></li>
+                          <li>
+                            <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $invoice->id }}">
+                              Delete
+                            </button>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="{{ url("/payment_form/$invoice->id") }}">Change Payment</a>
+                        </li>
+                        </ul>
+                      </div>
+                    </td>
                   </tr>
+                  <div class="modal fade" id="deleteModal{{ $invoice->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Invoice</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="{{ url("/invoice_delete/$invoice->id") }}" method="POST" >
+                        <div class="modal-body">
+                            @csrf
+                            @method('delete')
+                            <p>Are You Sure You Want to Delete Invoice {{ $invoice->invoice_number }}?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-outline-danger">Delete</button>
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
                   @endforeach
-                 
-                
                 </tbody>
             </table>
           </div>

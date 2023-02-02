@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
+use App\Models\InvoiceAttachment;
 use App\Models\InvoiceDetails;
 use Illuminate\Http\Request;
 
@@ -12,10 +14,15 @@ class InvoiceDetailsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        return view('invoices.invoice_details');
+        $invoiceDetails = InvoiceDetails::where('invoice_id',$id)->get();
+        $invoice = Invoice::findOrFail($id);
+        $invoiceAttachment = InvoiceAttachment::where('invoice_id',$id)->get();
+        return view('invoices.invoice_details',compact('invoiceDetails','invoice'))->with(['invoiceAttachment'=>$invoiceAttachment]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.

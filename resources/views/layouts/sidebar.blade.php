@@ -15,14 +15,20 @@
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ url('/invoice_show') }}">
-              <i class="bi bi-circle"></i><span>List</span>
+            <a href="{{ url('/invoice_show/All') }}">
+              <i class="bi bi-circle"></i><span>Invoices</span>
             </a>
           </li>
           <li>
             <a href="{{ url('/invoice_form') }}">
               <i class="bi bi-circle"></i><span>Add Invoice</span>
             </a>
+          </li>
+          <li>
+            <a href="{{ url('/invoice_archived_show') }}">
+              <i class="bi bi-circle"></i><span>Archived Invoices</span>
+            </a>
+          </li>
         </ul>
       </li><!-- End Invoices Nav -->
 

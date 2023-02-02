@@ -1,8 +1,11 @@
 <x-guest-layout>
     <x-jet-authentication-card>
-        <x-slot name="logo">
-            <x-jet-authentication-card-logo />
-        </x-slot>
+        <div class="d-flex justify-content-center py-4">
+            <a href="index.html" class="logo d-flex align-items-center w-auto">
+              <img src="assets/img/logo.png" alt="">
+              <span class="d-none d-lg-block">NiceAdmin</span>
+            </a>
+          </div>
 
         <div class="mb-4 text-sm text-gray-600">
             {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}

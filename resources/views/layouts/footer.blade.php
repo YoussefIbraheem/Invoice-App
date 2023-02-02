@@ -27,6 +27,7 @@
   <script src="{{ asset('assets/jQuery/jquery-3.6.3.min.js') }}"></script>
   <script src="{{ asset('assets/js/VAT_Calc.js') }}"></script>
   <script src="{{ asset('assets/js/main.js') }}"></script>
+  @yield('js')
   <script>
     $(document).ready(function() {
         $('select[name="Section"]').on('change', function() {

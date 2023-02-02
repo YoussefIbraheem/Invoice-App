@@ -26,8 +26,7 @@ return new class extends Migration
             $table->string('Rate_VAT', 999);
             $table->decimal('Total',8,2);
             $table->foreignId('section_id')->constrained('sections')->onUpdate('cascade')->onDelete('cascade');
-            $table->enum('Status', ['paid','Partially Paid','Unpaid'])->default('Unpaid');
-            $table->integer('Value_Status');
+            $table->enum('Status', ['Paid','Partially Paid','Unpaid'])->default('Unpaid');
             $table->text('note')->nullable();
             $table->date('Payment_Date')->nullable();
             $table->softDeletes();

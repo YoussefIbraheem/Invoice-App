@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Invoice extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
         'invoice_number',
         'invoice_Date',
@@ -20,7 +21,6 @@ class Invoice extends Model
         'Rate_VAT',
         'Total',
         'Status',
-        'Value_Status',
         'note',
         'Payment_Date',
     ];

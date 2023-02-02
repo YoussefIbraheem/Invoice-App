@@ -18,8 +18,7 @@ return new class extends Migration
             $table->string('invoice_number', 50);
             $table->string('product', 50);
             $table->string('Section', 999);
-            $table->string('Status', 50);
-            $table->integer('Value_Status');
+            $table->enum('Status', ['Paid','Partially Paid','Unpaid'])->default('Unpaid');
             $table->date('Payment_Date')->nullable();
             $table->text('note')->nullable();
             $table->string('user',300);
